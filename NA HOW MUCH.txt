@@ -1,0 +1,14 @@
+NA HOW MUCH
+
+-functional requirements (what the system does)
+user registration
+file upload
+
+
+
+-non functional req (system qualities i.e. security adaptability etc.)
+availability
+speed
+persistency
+
+
