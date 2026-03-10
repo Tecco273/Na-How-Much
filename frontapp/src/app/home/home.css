@@ -1,0 +1,48 @@
+.navbar{
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:#222;
+color:white;
+}
+
+.login-btn{
+background:#ff6600;
+border:none;
+padding:8px 15px;
+color:white;
+cursor:pointer;
+}
+
+.search-section{
+margin:30px auto;
+text-align:center;
+}
+
+.search-section input{
+padding:10px;
+width:300px;
+}
+
+.search-section select{
+padding:10px;
+}
+
+.results{
+display:flex;
+flex-wrap:wrap;
+gap:20px;
+justify-content:center;
+}
+
+.item-card{
+border:1px solid #ddd;
+padding:15px;
+width:200px;
+text-align:center;
+border-radius:10px;
+}
+
+.item-card img{
+width:100%;
+}

@@ -1,24 +1,15 @@
+package com.soft.backapp.controller;
+
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 
-package com.soft.backapp.controller;
+import lombok.RequiredArgsConstructor;
+
 
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 @RequiredArgsConstructor
 public class UserController {
-private final MyUserService userService;
-private final ItemService itemService;
-
-@PostMapping("")
-public String postMethodName(@RequestBody String entity) {
-    //TODO: process POST request
-    
-    return entity;
-}
-
 }

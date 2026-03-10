@@ -49,4 +49,8 @@ public class MyUserService implements UserDetailsService {
     public void save(MyUser user) {
         myUserRepository.save(user);
     }
+
+    public MyUser getUserByUsername(String username) {
+        return myUserRepository.findByUsername(username).orElse(null);
+    }
 }

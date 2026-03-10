@@ -18,6 +18,8 @@ export class Login {
 
   isEmail = false
 
+
+
   constructor(private http: HttpClient, private router: Router) {}
 
   login(){
@@ -29,7 +31,14 @@ export class Login {
     this.http.post("http://localhost:8080/api/auth/login", body)
       .subscribe({
         next: (res) => {
-          console.log("Login success", res)
+          const token = (res as any).token
+
+        localStorage.setItem("token", token)
+        localStorage.setItem("userId", (res as any).userId)
+
+        console.log("Login success")
+
+        this.router.navigate(["/"])
         },
         error: (err) => {
           console.log("Login failed", err)

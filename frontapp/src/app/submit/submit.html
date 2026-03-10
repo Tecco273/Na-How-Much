@@ -1,0 +1,178 @@
+<div class="submit-container">
+
+<h2>Submit Purchase</h2>
+
+<form (submit)="submitPurchase()">
+
+<label>Select Item</label>
+
+<button type="button" (click)="openNewItemPopup()">New Item</button>
+
+<input
+type="text"
+[(ngModel)]="itemSearch"
+name="itemSearch"
+(input)="searchItems()"
+placeholder="Type item name..."
+>
+
+@if(selectedItem){
+<div class="selected-item">
+
+Selected Item: {{selectedItem.name}}
+
+<button
+type="button"
+(click)="selectedItem=null"
+>
+Remove
+</button>
+
+</div>
+}
+
+@if(itemSuggestions.length > 0){
+<div class="suggestions">
+
+@for(item of itemSuggestions; track item.id){
+<div class="suggestion-item"
+(click)="selectItem(item)">
+{{item.name}}
+</div>
+}
+
+</div>
+}
+
+<label>Price (FCFA)</label>
+<input type="number" [(ngModel)]="price" name="price" required>
+
+<label>Purchase Date</label>
+<input type="date" [(ngModel)]="purchaseDate" name="purchaseDate" required>
+
+<label>Location</label>
+<input type="text" [(ngModel)]="location" name="location" required>
+
+<label>Receipt Image</label>
+<input type="file" (change)="onFileSelected($event)">
+
+<button type="submit">Submit Purchase</button>
+
+</form>
+
+</div>
+
+@if(showNewItemPopup){
+
+  <div class="submit-container">
+
+<h2>Submit Purchase</h2>
+
+<form (submit)="submitPurchase()">
+
+<label>Select Item</label>
+
+<button type="button" (click)="openNewItemPopup()">New Item</button>
+
+<input
+type="text"
+[(ngModel)]="itemSearch"
+name="itemSearch"
+(input)="searchItems()"
+placeholder="Type item name..."
+>
+
+@if(selectedItem){
+<div class="selected-item">
+
+Selected Item: {{selectedItem.name}}
+
+<button type="button" (click)="selectedItem=null">
+Remove
+</button>
+
+</div>
+}
+
+@if(itemSuggestions.length > 0){
+<div class="suggestions">
+
+@for(item of itemSuggestions; track item.id){
+<div class="suggestion-item"
+(click)="selectItem(item)">
+{{item.name}}
+</div>
+}
+
+</div>
+}
+
+<label>Price (FCFA)</label>
+<input type="number" [(ngModel)]="price" name="price" required>
+
+<label>Purchase Date</label>
+<input type="date" [(ngModel)]="purchaseDate" name="purchaseDate" required>
+
+<label>Location</label>
+<input type="text" [(ngModel)]="location" name="location" required>
+
+<label>Receipt Image</label>
+<input type="file" (change)="onFileSelected($event)">
+
+<button type="submit">Submit Purchase</button>
+
+</form>
+
+</div>
+
+
+@if (showNewItemPopup) {
+
+<div class="modal-overlay">
+
+<div class="modal-box">
+
+<h3>Add New Item</h3>
+
+<label>Item Name</label>
+<input type="text" [(ngModel)]="itemName">
+
+<label>Category</label>
+
+<input
+type="text"
+[(ngModel)]="categorySearch"
+name="categorySearch"
+(input)="searchCategories()"
+placeholder="Search category..."
+>
+
+@if(categorySuggestions.length > 0){
+<div class="suggestions">
+
+@for(cat of categorySuggestions; track cat.id){
+<div class="suggestion-item"
+(click)="selectCategory(cat)">
+{{cat.name}}
+</div>
+}
+
+</div>
+}
+
+<label>Item Image</label>
+<input type="file" (change)="onItemImageSelected($event)">
+
+<div class="modal-buttons">
+
+<button type="button" (click)="saveNewItem()">Save</button>
+<button type="button" (click)="closeNewItemPopup()">Cancel</button>
+
+</div>
+
+</div>
+
+</div>
+
+}
+}

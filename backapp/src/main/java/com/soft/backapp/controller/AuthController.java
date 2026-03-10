@@ -35,7 +35,7 @@ public class AuthController {
         } else if (request.getEmail() != null) {
             return loginWithEmail((AuthRequest) request);
         } else {
-            return ResponseEntity.badRequest().body(new AuthResponse("Invalid authentication request", null));
+            return ResponseEntity.badRequest().body(new AuthResponse("Invalid authentication request"));
         }
     }
 
@@ -51,9 +51,9 @@ public class AuthController {
         myUserService.save(user);
         try {
             String token = loginMethod(request.getUsername(), request.getPassword());
-            return ResponseEntity.ok(new AuthResponse("User registered and logged in successfully", token));
+            return ResponseEntity.ok(new AuthResponse("User registered and logged in successfully", token, myUserService.getUserByUsername(request.getUsername()).getId()));
         } catch (Exception e) {
-            return ResponseEntity.status(500).body(new AuthResponse("User registered but failed to log in", null));
+            return ResponseEntity.status(500).body(new AuthResponse("User registered but failed to log in"));
         }
     }
 
@@ -68,20 +68,20 @@ public class AuthController {
         String username = myUserService.loadUserByEmail(request.getEmail()).getUsername();
         try {
             String token = loginMethod(username, request.getPassword());
-            return ResponseEntity.ok(new AuthResponse("User logged in successfully", token));
+            return ResponseEntity.ok(new AuthResponse("User logged in successfully", token, myUserService.getUserByUsername(username).getId()));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(401).body(new AuthResponse("Bad Credentials", null));
+            return ResponseEntity.status(401).body(new AuthResponse("Bad Credentials"));
         }
     }
 
     private ResponseEntity<?> loginWithUsername(AuthRequest request) {
         try {
             String token = loginMethod(request.getUsername(), request.getPassword());
-            return ResponseEntity.ok(new AuthResponse("User logged in successfully", token));
+            return ResponseEntity.ok(new AuthResponse("User logged in successfully", token, myUserService.getUserByUsername(request.getUsername()).getId()));
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.status(401).body(new AuthResponse("Invalid username or password", null));
+            return ResponseEntity.status(401).body(new AuthResponse("Invalid username or password"));
         }
     }
 }
