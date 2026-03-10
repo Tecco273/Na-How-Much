@@ -22,4 +22,8 @@ public class SubmissionService {
         return submissionRepository.findByItemId(id);
     }
 
+    public List<Submission> getSubmissionsByUserId(long id) {
+        return submissionRepository.findByUserId(id);
+    }
+
 }

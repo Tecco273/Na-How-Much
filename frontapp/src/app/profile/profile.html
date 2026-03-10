@@ -4,8 +4,11 @@
 
 <div class="profile-info">
 
-<label>Name</label>
-<p>{{user.name}}</p>
+<label>First Name</label>
+<p>{{user.firstName}}</p>
+
+<label>Last Name</label>
+<p>{{user.lastName}}</p>
 
 <label>Email</label>
 <input type="text" [(ngModel)]="user.email">
@@ -14,7 +17,7 @@
 <input type="text" [(ngModel)]="user.username">
 
 <label>Number of Submissions</label>
-<p>{{user.submissions}}</p>
+<p>{{user.submissionNum}}</p>
 
 <button (click)="updateProfile()">Save Changes</button>
 
@@ -25,6 +28,12 @@
 <div class="password-section">
 
 <h3>Change Password</h3>
+
+<input
+type="password"
+[(ngModel)]="oldPassword"
+placeholder="old password"
+>
 
 <input
 type="password"

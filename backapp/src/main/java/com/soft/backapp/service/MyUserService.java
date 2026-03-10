@@ -1,5 +1,6 @@
 package com.soft.backapp.service;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -14,7 +15,7 @@ import lombok.RequiredArgsConstructor;
 @Service
 @RequiredArgsConstructor
 public class MyUserService implements UserDetailsService {
-    private final MyUserRepository myUserRepository;
+    private final MyUserRepository myUserRepository;;
 
     @Override
     public UserDetails loadUserByUsername(String username)
@@ -46,6 +47,14 @@ public class MyUserService implements UserDetailsService {
                 .build();
     }
 
+    public MyUser getProfile(){
+        String username = SecurityContextHolder
+                .getContext()
+                .getAuthentication()
+                .getName();
+        return getUserByUsername(username);
+    }
+
     public void save(MyUser user) {
         myUserRepository.save(user);
     }
@@ -53,4 +62,10 @@ public class MyUserService implements UserDetailsService {
     public MyUser getUserByUsername(String username) {
         return myUserRepository.findByUsername(username).orElse(null);
     }
+
+    public MyUser getUserById(Long id) {
+        return myUserRepository.findById(id).orElse(null);
+    }
+
+    
 }

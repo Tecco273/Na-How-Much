@@ -3,6 +3,7 @@ package com.soft.backapp.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.soft.backapp.dto.AuthRequest;
 import com.soft.backapp.dto.AuthResponse;
+import com.soft.backapp.dto.PasswordChangeRequest;
 import com.soft.backapp.dto.RegistrationRequest;
 import com.soft.backapp.model.MyUser;
 import com.soft.backapp.model.MyUserBuilder;
@@ -54,6 +56,30 @@ public class AuthController {
             return ResponseEntity.ok(new AuthResponse("User registered and logged in successfully", token, myUserService.getUserByUsername(request.getUsername()).getId()));
         } catch (Exception e) {
             return ResponseEntity.status(500).body(new AuthResponse("User registered but failed to log in"));
+        }
+    }
+
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody PasswordChangeRequest request){
+        try {
+                String username = SecurityContextHolder
+                    .getContext()
+                    .getAuthentication()
+                    .getName();
+
+            MyUser user = myUserService.getUserByUsername(username);
+
+            // verify old password
+            if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
+                throw new RuntimeException("Old password is incorrect");
+            }
+
+            // encode new password
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            myUserService.save(user);
+            return ResponseEntity.ok(new AuthResponse("password changed successfully"));
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(new AuthResponse(e.getMessage()));
         }
     }
 

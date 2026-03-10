@@ -11,18 +11,23 @@ import { FormsModule } from '@angular/forms'
 })
 export class Profile {
 
-  constructor(private http: HttpClient){}
+  constructor(
+              private http: HttpClient,
+              private cdr: ChangeDetectorRef
+            ){}
 
   token = ""
 
   user = {
     email: "",
     username: "",
-    name: "",
-    submissions: 0
+    firstName: "",
+    lastName: "",
+    submissionNum: 0
   }
 
   newPassword = ""
+  oldPassword = ""
 
   ngOnInit(){
 
@@ -32,9 +37,10 @@ export class Profile {
       Authorization: `Bearer ${this.token}`
     }
 
-    this.http.get<any>("http://localhost:8080/api/user/profile", { headers })
+    this.http.get<any>("http://localhost:8080/api/user/getProfile", { headers })
     .subscribe(data => {
       this.user = data
+      this.cdr.detectChanges()
     })
 
   }
@@ -65,7 +71,7 @@ export class Profile {
 
     this.http.put(
       "http://localhost:8080/api/user/changePassword",
-      { password: this.newPassword },
+      {oldPassword : this.oldPassword ,newPassword: this.newPassword },
       { headers }
     ).subscribe(()=>{
       alert("Password changed")
