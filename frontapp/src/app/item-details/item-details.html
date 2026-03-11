@@ -36,27 +36,42 @@
 
 </div>
 
-<div class="login-box">
+@if(item){
 
-  <h2>Login</h2>
+<div class="item-page">
 
-  <form (submit)="login()">
+<h2>{{item.name}}</h2>
 
-    <label>Username/email</label>
-    <input type="text" [(ngModel)]="username" name="username" required>
+<img [src]="item.imageUrl" class="item-image">
 
-    <label>Password</label>
-    <input type="password" [(ngModel)]="password" name="password" required>
+<h3>Category</h3>
+<p class="avg">{{category?.name}}</p>
 
-    <button type="submit">Login</button>
+<h3>Average Price</h3>
+<p class="avg">{{item.avgPrice}} FCFA</p>
 
-  </form>
+<h3>Last 5 Submissions</h3>
 
-  <hr>
+<table>
 
-  <button (click)="goToRegister()">Register</button>
-  <button type="button" class="link-button" (click)="forgetPassword()">
-  Forgot password?
-</button>
+<tr>
+<th>Location</th>
+<th>Price</th>
+<th>Date</th>
+</tr>
+
+@for(sub of submissions; track sub.id){
+
+<tr>
+<td>{{sub.location}}</td>
+<td>{{sub.price}} FCFA</td>
+<td>{{ sub.purchaseDate | date:'dd/MM/yyyy' }}</td>
+</tr>
+
+}
+
+</table>
 
 </div>
+
+}

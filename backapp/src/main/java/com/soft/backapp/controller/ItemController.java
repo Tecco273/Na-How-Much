@@ -25,6 +25,11 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getAllItems());
     }
 
+    @GetMapping("/getItemById")
+    public ResponseEntity<?> getItemsById(@RequestParam Long id) {
+        return ResponseEntity.ok(itemService.getItemById(id));
+    }
+
     @GetMapping("/searchItems")
     public ResponseEntity<?> getItemsByNameLike(@RequestParam String query) {
         return ResponseEntity.ok(itemService.searchItemsByNameLike(query));

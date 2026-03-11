@@ -1,1 +1,64 @@
-/* You can add global styles to this file, and also import other style files */
+body{
+font-family: Arial, Helvetica, sans-serif;
+margin:0;
+background:#f5f6fa;
+}
+
+/* NAVBAR */
+
+.navbar{
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:15px 30px;
+background:#1e1e2f;
+color:white;
+}
+
+.logo{
+margin:0;
+color:white;
+text-decoration:none;
+}
+
+.login-btn,
+.profile-btn{
+background:#ff6600;
+border:none;
+padding:8px 16px;
+color:white;
+cursor:pointer;
+border-radius:6px;
+}
+
+.login-btn:hover,
+.profile-btn:hover{
+background:#ff7f26;
+}
+
+/* PROFILE MENU */
+
+.profile-menu{
+position:relative;
+}
+
+.dropdown{
+position:absolute;
+right:0;
+top:40px;
+background:white;
+border-radius:6px;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+width:140px;
+overflow:hidden;
+}
+
+.dropdown-item{
+padding:10px;
+cursor:pointer;
+color:#333;
+}
+
+.dropdown-item:hover{
+background:#f0f0f0;
+}

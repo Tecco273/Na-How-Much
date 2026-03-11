@@ -1,5 +1,7 @@
 package com.soft.backapp.service;
 
+import java.util.Optional;
+
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -67,5 +69,7 @@ public class MyUserService implements UserDetailsService {
         return myUserRepository.findById(id).orElse(null);
     }
 
-    
+    public Optional<MyUser> getUserByEmail(String email){
+        return myUserRepository.findByEmail(email);
+    }
 }

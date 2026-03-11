@@ -1,0 +1,38 @@
+.item-page{
+max-width:700px;
+margin:40px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 3px 12px rgba(0,0,0,0.1);
+text-align:center;
+}
+
+.item-image{
+width:260px;
+margin:20px 0;
+border-radius:8px;
+}
+
+.avg{
+font-size:22px;
+font-weight:bold;
+color:#2a7;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+margin-top:20px;
+}
+
+th{
+background:#ff6600;
+color:white;
+padding:10px;
+}
+
+td{
+padding:10px;
+border-bottom:1px solid #eee;
+}

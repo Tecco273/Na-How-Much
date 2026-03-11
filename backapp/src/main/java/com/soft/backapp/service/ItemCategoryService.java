@@ -21,4 +21,8 @@ public class ItemCategoryService {
     public List<ItemCategory> searchCategoriesByNameLike(String name) {
         return itemCategoryRepository.findByNameLike(name);
     }
+
+    public ItemCategory getCategoryById(Long id){
+        return itemCategoryRepository.findById(id).get();
+    }
 }

@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http'
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { Router } from '@angular/router'
+import { RouterLink } from '@angular/router';
 import { ChangeDetectorRef } from '@angular/core'
 import { Category } from '../category'
 import { Item } from '../item'
@@ -9,7 +10,7 @@ import { Item } from '../item'
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, RouterLink],
   templateUrl: './home.html',
   styleUrl: './home.css'
 })
@@ -26,10 +27,10 @@ export class Home {
   token = ""
 
   isLoggedIn = false
+  showMenu = false
 
   items:Item[] = []
   categories:Category[] = []
-
 
   ngOnInit() {
     this.token = localStorage.getItem("token") || ""
@@ -61,5 +62,25 @@ export class Home {
   addSubmission(){
     this.router.navigate(["/submit"])
   }
+
+  logout(){
+    const headers = {
+      Authorization: `Bearer ${this.token}`
+    }
+    this.http.post(`http://localhost:8080/api/user/logout`,"",{headers})
+    .subscribe({
+        error: (err) => {
+          console.log("Logout failed", err)
+          return
+        }
+      })
+      this.isLoggedIn = false;
+      localStorage.removeItem("token");
+      this.router.navigate(["/login"])
+  }
+
+   toggleMenu(){
+  this.showMenu = !this.showMenu
+}
 
 }

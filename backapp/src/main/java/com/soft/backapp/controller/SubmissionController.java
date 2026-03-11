@@ -14,6 +14,9 @@ import com.soft.backapp.service.SubmissionService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 
 @RestController
@@ -37,5 +40,10 @@ public class SubmissionController {
         itemService.saveItem(item);
 
         return ResponseEntity.ok("Submission saved successfully");
+    }
+
+    @GetMapping("/getLast5ForItem")
+    public ResponseEntity<?> getLast5ForItem(@RequestParam Long itemId) {
+        return ResponseEntity.ok(submissionService.getLast5ByItemId(itemId));
     }
 }

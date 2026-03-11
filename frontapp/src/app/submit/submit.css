@@ -1,24 +1,76 @@
-.submit-container{
-width:400px;
-margin:40px auto;
-padding:20px;
-border:1px solid #ddd;
+.login-box,
+.register-box,
+.submit-container,
+.forgot-container,
+.profile-container{
+width:420px;
+margin:50px auto;
+background:white;
+padding:30px;
 border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.1);
 }
 
-input,select{
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input,
+select{
 width:100%;
 padding:10px;
-margin-bottom:15px;
+margin-top:6px;
+border:1px solid #ccc;
+border-radius:6px;
 }
 
 button{
-width:100%;
+margin-top:15px;
 padding:10px;
-background:#28a745;
-color:white;
+background:#ff6600;
 border:none;
+color:white;
 cursor:pointer;
+border-radius:6px;
+}
+
+button:hover{
+background:#ff7f26;
+}
+
+.error{
+color:red;
+margin-top:10px;
+}
+
+.suggestions{
+border:1px solid #ddd;
+border-radius:6px;
+background:white;
+max-height:150px;
+overflow-y:auto;
+margin-top:5px;
+}
+
+.suggestion-item{
+padding:8px;
+cursor:pointer;
+}
+
+.suggestion-item:hover{
+background:#f0f0f0;
+}
+
+.selected-item{
+margin-top:10px;
+background:#eef3ff;
+padding:8px;
+border-radius:6px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
 .modal-overlay{
@@ -27,10 +79,10 @@ top:0;
 left:0;
 width:100%;
 height:100%;
-background:rgba(0,0,0,0.5);
+background:rgba(0,0,0,0.4);
 display:flex;
-justify-content:center;
 align-items:center;
+justify-content:center;
 }
 
 .modal-box{
@@ -40,61 +92,8 @@ border-radius:10px;
 width:350px;
 }
 
-.modal-box input,
-.modal-box select{
-width:100%;
-padding:8px;
-margin-bottom:10px;
-}
-
 .modal-buttons{
 display:flex;
-gap:10px;
-}
-
-.modal-buttons button{
-flex:1;
-padding:10px;
-}
-
-.suggestions{
-border:1px solid #ddd;
-background:white;
-max-height:150px;
-overflow-y:auto;
-}
-
-.suggestion-item{
-padding:8px;
-cursor:pointer;
-}
-
-.suggestion-item:hover{
-background:#eee;
-}
-
-button[type="button"]{
-background:#007bff;
-width: 20%;
-margin-left: 60%;
-margin-bottom:  10px;
-}
-
-.selected-item{
-margin-top:8px;
-padding:8px;
-background:#eef3ff;
-border:1px solid #ccd6ff;
-border-radius:6px;
-display:flex;
 justify-content:space-between;
-align-items:center;
-}
-
-.selected-item button{
-background:#ff4d4d;
-color:white;
-border:none;
-padding:4px 8px;
-cursor:pointer;
+margin-top:15px;
 }

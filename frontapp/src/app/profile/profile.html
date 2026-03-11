@@ -1,3 +1,41 @@
+<div class="navbar">
+
+  <a href="/"><h2 class="logo">NAhowmuch</h2></a>
+
+  @if(isLoggedIn){
+
+  <div class="profile-menu">
+
+    <button class="profile-btn" (click)="toggleMenu()">
+      Profile ▼
+    </button>
+
+    @if(showMenu){
+    <div class="dropdown">
+
+      <div class="dropdown-item" (click)="goProfile()">
+        Profile
+      </div>
+
+      <div class="dropdown-item" (click)="logout()">
+        Logout
+      </div>
+
+    </div>
+    }
+
+  </div>
+
+  } @else {
+
+  <button (click)="goLogin()" class="login-btn">
+    Login
+  </button>
+
+  }
+
+</div>
+
 <div class="profile-container">
 
 <h2>Your Profile</h2>

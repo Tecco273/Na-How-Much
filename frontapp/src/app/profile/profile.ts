@@ -1,6 +1,7 @@
 import { Component, ChangeDetectorRef } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { FormsModule } from '@angular/forms'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +14,8 @@ export class Profile {
 
   constructor(
               private http: HttpClient,
-              private cdr: ChangeDetectorRef
+              private cdr: ChangeDetectorRef,
+              private router: Router
             ){}
 
   token = ""
@@ -29,9 +31,13 @@ export class Profile {
   newPassword = ""
   oldPassword = ""
 
+  isLoggedIn= false
+  showMenu = false
+
   ngOnInit(){
 
     this.token = localStorage.getItem("token") || ""
+    this.isLoggedIn = !!this.token
 
     const headers = {
       Authorization: `Bearer ${this.token}`
@@ -70,7 +76,7 @@ export class Profile {
     }
 
     this.http.put(
-      "http://localhost:8080/api/user/changePassword",
+      "http://localhost:8080/api/auth/changePassword",
       {oldPassword : this.oldPassword ,newPassword: this.newPassword },
       { headers }
     ).subscribe(()=>{
@@ -78,6 +84,36 @@ export class Profile {
       this.newPassword = ""
     })
 
+  }
+
+  goLogin(){
+    this.router.navigate(["/login"])
+  }
+
+  goProfile(){
+    this.router.navigate(["/profile"])
+  }
+
+  addSubmission(){
+    this.router.navigate(["/submit"])
+  }
+
+   toggleMenu(){
+    this.showMenu = !this.showMenu
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    this.http.post(`http://localhost:8080/api/user/logout`,"")
+    .subscribe({
+        next: (res) => {
+          this.isLoggedIn =false;
+          this.router.navigate(["/"])
+        },
+        error: (err) => {
+          console.log("Login failed", err)
+        }
+      })
   }
 
 }

@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 @RestController
 @RequestMapping("/api/user")
 @RequiredArgsConstructor
@@ -24,5 +25,17 @@ public class UserController {
     public ResponseEntity<?> getProfile() {
         MyUser user = userService.getProfile();
         return ResponseEntity.ok(new ProfileResponse(user,submissionService.getSubmissionsByUserId(user.getId()).size()));
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout() {
+        MyUser user = userService.getProfile();
+        user = userService.getUserById(user.getId());
+
+        user.setTokenVersion(user.getTokenVersion() + 1);
+
+        userService.save(user);
+
+        return ResponseEntity.ok("Logged out successfully");
     }
 }

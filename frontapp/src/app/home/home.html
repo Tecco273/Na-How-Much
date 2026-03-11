@@ -1,17 +1,37 @@
 <div class="navbar">
 
-  <h2 class="logo">NAhowmuch</h2>
+  <a href="/"><h2 class="logo">NAhowmuch</h2></a>
 
   @if(isLoggedIn){
 
-    <button (click)="goProfile()" class="profile-btn">
-      Profile
+  <div class="profile-menu">
+
+    <button class="profile-btn" (click)="toggleMenu()">
+      Profile ▼
     </button>
 
+    @if(showMenu){
+    <div class="dropdown">
+
+      <div class="dropdown-item" (click)="goProfile()">
+        Profile
+      </div>
+
+      <div class="dropdown-item" (click)="logout()">
+        Logout
+      </div>
+
+    </div>
+    }
+
+  </div>
+
   } @else {
+
   <button (click)="goLogin()" class="login-btn">
     Login
   </button>
+
   }
 
 </div>
@@ -43,7 +63,9 @@
 
 <div class="results">
 
-@for(item of items; track item.id){
+@@for(item of items; track item.id){
+
+<a [routerLink]="['/item-details', item.id]" class="item-link">
 
   <div class="item-card">
 
@@ -54,6 +76,8 @@
     <p>Avg Price: {{item.avgPrice}} FCFA</p>
 
   </div>
+
+</a>
 
 }
 </div>

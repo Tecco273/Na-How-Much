@@ -2,7 +2,6 @@ import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpClient } from '@angular/common/http'
 import { Router } from '@angular/router'
-import { email } from '@angular/forms/signals'
 
 @Component({
   selector: 'app-login',
@@ -15,12 +14,22 @@ export class Login {
 
   username = ""
   password = ""
+  token = ""
 
   isEmail = false
+
+  isLoggedIn= false
+  showMenu = false
 
 
 
   constructor(private http: HttpClient, private router: Router) {}
+
+  ngOnInit(){
+
+    this.token = localStorage.getItem("token") || ""
+    this.isLoggedIn = !!this.token
+  }
 
   login(){
 
@@ -49,6 +58,40 @@ export class Login {
 
   goToRegister(){
     this.router.navigate(["/register"])
+  }
+
+  forgetPassword(){
+    this.router.navigate(["/forget-password"])
+  }
+
+  goLogin(){
+    this.router.navigate(["/login"])
+  }
+
+  goProfile(){
+    this.router.navigate(["/profile"])
+  }
+
+  addSubmission(){
+    this.router.navigate(["/submit"])
+  }
+
+   toggleMenu(){
+    this.showMenu = !this.showMenu
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    this.http.post(`http://localhost:8080/api/user/logout`,"")
+    .subscribe({
+        next: (res) => {
+          this.isLoggedIn =false;
+          this.router.navigate(["/"])
+        },
+        error: (err) => {
+          console.log("Login failed", err)
+        }
+      })
   }
 
 }

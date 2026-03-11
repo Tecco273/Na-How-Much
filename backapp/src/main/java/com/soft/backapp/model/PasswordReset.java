@@ -1,31 +1,34 @@
 package com.soft.backapp.model;
 
+import java.util.Date;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Table(name = "my_user")
+@Entity
 @Getter
 @Setter
+@Table(name = "password_reset")
 @AllArgsConstructor
-@Entity
-@Data
 @NoArgsConstructor
-public class MyUser {
+public class PasswordReset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String username;
-    private String password;
-    private String firstName;
-    private String lastName;
-    private String email;
-    private Integer tokenVersion ;
+    private String userEmail;
+    private String code;
+    private Date createdAt;
+
+    public PasswordReset(String userEmail, String code, Date createdAt){
+        this.code = code;
+        this.createdAt = createdAt;
+        this.userEmail = userEmail;
+    }
 }

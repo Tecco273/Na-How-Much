@@ -26,4 +26,9 @@ public class SubmissionService {
         return submissionRepository.findByUserId(id);
     }
 
+    public List<Submission> getLast5ByItemId(long id) {
+        return submissionRepository.getLast5ForItem(id);
+    }
+
+
 }

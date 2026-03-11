@@ -41,9 +41,12 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()
                 .requestMatchers("/api/public/**").permitAll()
                 .requestMatchers("/api/item/searchItems").permitAll()
+                .requestMatchers("/api/item/getItemById").permitAll()
                 .requestMatchers("/api/item/searchItemsByCategory").permitAll()
                 .requestMatchers("/api/category/searchCategories").permitAll()
                 .requestMatchers("/api/category/getAllCategories").permitAll()
+                .requestMatchers("/api/category/getCategoryById").permitAll()
+                .requestMatchers("/api/submission/getLast5ForItem").permitAll()
                 .anyRequest().authenticated()
             )
             .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

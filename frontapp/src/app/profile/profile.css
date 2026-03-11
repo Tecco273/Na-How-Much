@@ -25,3 +25,46 @@ color:white;
 border:none;
 cursor:pointer;
 }
+
+
+.navbar{
+display:flex;
+justify-content:space-between;
+padding:15px;
+background:#222;
+color:white;
+}
+
+.login-btn{
+background:#ff6600;
+border:none;
+padding:8px 15px;
+color:white;
+width: 80px;
+cursor:pointer;
+}
+
+.profile-menu{
+position:relative;
+}
+
+.dropdown{
+position:absolute;
+right:0;
+top:40px;
+background:white;
+border:1px solid #ddd;
+border-radius:6px;
+box-shadow:0 2px 8px rgba(0,0,0,0.1);
+width:120px;
+}
+
+.dropdown-item{
+padding:10px;
+cursor:pointer;
+color: #222;
+}
+
+.dropdown-item:hover{
+background:#f0f0f0;
+}

@@ -1,4 +1,46 @@
+.login-box,
+.register-box,
+.submit-container,
+.forgot-container,
+.profile-container{
+width:420px;
+margin:50px auto;
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+label{
+display:block;
+margin-top:15px;
+font-weight:bold;
+}
+
+input,
+select{
+width:100%;
+padding:10px;
+margin-top:6px;
+border:1px solid #ccc;
+border-radius:6px;
+}
+
+button{
+margin-top:15px;
+padding:10px;
+background:#ff6600;
+border:none;
+color:white;
+cursor:pointer;
+border-radius:6px;
+}
+
+button:hover{
+background:#ff7f26;
+}
+
 .error{
-  color:red;
-  margin-top:5px;
+color:red;
+margin-top:10px;
 }

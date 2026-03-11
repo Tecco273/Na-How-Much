@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router'
 import { Category } from '../category'
 import { Item } from '../item'
 import { Subject } from 'rxjs'
@@ -19,9 +20,13 @@ export class Submit{
   token = ""
   userId = ""
 
+  isLoggedIn= false
+  showMenu = false
+
  ngOnInit() {
   this.token = localStorage.getItem("token") || ""
   this.userId = localStorage.getItem("userId") || ""
+  this.isLoggedIn = !!this.token
   const headers = {
     Authorization: `Bearer ${this.token}`
   }
@@ -72,7 +77,7 @@ categorySearchSubject = new Subject<string>()
   location = ""
   purchaseDate = ""
 
-  constructor(private http:HttpClient){}
+  constructor(private http:HttpClient, private router: Router){}
 
   onFileSelected(event:any){
   this.receiptFile = event.target.files[0]
@@ -200,5 +205,35 @@ submitPurchase(){
 
   })
 }
+
+goLogin(){
+    this.router.navigate(["/login"])
+  }
+
+  goProfile(){
+    this.router.navigate(["/profile"])
+  }
+
+  addSubmission(){
+    this.router.navigate(["/submit"])
+  }
+
+   toggleMenu(){
+    this.showMenu = !this.showMenu
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    this.http.post(`http://localhost:8080/api/user/logout`,null)
+    .subscribe({
+        next: (res) => {
+          this.isLoggedIn =false;
+          this.router.navigate(["/"])
+        },
+        error: (err) => {
+          console.log("Login failed", err)
+        }
+      })
+  }
 
 }

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core'
 import { FormsModule } from '@angular/forms'
 import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-register',
@@ -21,7 +22,17 @@ export class Register {
   passwordMismatch = false
   invalidUsername = false
 
-  constructor(private http: HttpClient) {}
+  isLoggedIn= false
+  showMenu = false
+  token = ""
+
+  constructor(private http: HttpClient, private router: Router) {}
+
+  ngOnInit(){
+
+    this.token = localStorage.getItem("token") || ""
+    this.isLoggedIn = !!this.token
+  }
 
   checkPasswords(){
     this.passwordMismatch = this.password !== this.confirmPassword
@@ -64,5 +75,35 @@ export class Register {
       }
     })
 }
+
+goLogin(){
+    this.router.navigate(["/login"])
+  }
+
+  goProfile(){
+    this.router.navigate(["/profile"])
+  }
+
+  addSubmission(){
+    this.router.navigate(["/submit"])
+  }
+
+   toggleMenu(){
+    this.showMenu = !this.showMenu
+  }
+
+  logout(){
+    localStorage.removeItem("token");
+    this.http.post(`http://localhost:8080/api/user/logout`,"")
+    .subscribe({
+        next: (res) => {
+          this.isLoggedIn =false;
+          this.router.navigate(["/"])
+        },
+        error: (err) => {
+          console.log("Login failed", err)
+        }
+      })
+  }
 
 }

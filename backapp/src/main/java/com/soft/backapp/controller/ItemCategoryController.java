@@ -14,15 +14,20 @@ import lombok.RequiredArgsConstructor;
 @RequestMapping("/api/category")
 @RequiredArgsConstructor
 public class ItemCategoryController {
-    private final ItemCategoryService ItemCategoryService;
+    private final ItemCategoryService itemCategoryService;
 
     @GetMapping("/getAllCategories")
     public ResponseEntity<?> getAllCategories() {
-        return ResponseEntity.ok(ItemCategoryService.getAllCategories());
+        return ResponseEntity.ok(itemCategoryService.getAllCategories());
+    }
+
+    @GetMapping("/getCategoryById")
+    public ResponseEntity<?> getCategoryById(@RequestParam Long id) {
+        return ResponseEntity.ok(itemCategoryService.getCategoryById(id));
     }
 
     @GetMapping("/searchCategories")
     public ResponseEntity<?> getCategoriesByNameLike(@RequestParam String query) {
-        return ResponseEntity.ok(ItemCategoryService.searchCategoriesByNameLike(query));
+        return ResponseEntity.ok(itemCategoryService.searchCategoriesByNameLike(query));
     }
 }

@@ -4,6 +4,8 @@ import io.jsonwebtoken.*;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.stereotype.Component;
 
+import com.soft.backapp.model.MyUser;
+
 import java.security.Key;
 import java.util.Date;
 
@@ -16,10 +18,11 @@ public class JwtService {
         return Keys.hmacShaKeyFor(SECRET.getBytes());
     }
 
-    public String generateToken(String username) {
+    public String generateToken(MyUser user) {
         return Jwts.builder()
-                .setSubject(username)
+                .setSubject(user.getUsername())
                 .setIssuedAt(new Date())
+                .claim("tokenVersion", user.getTokenVersion())
                 .setExpiration(new Date(System.currentTimeMillis() + 86400000)) // 1 day
                 .signWith(getSignKey(), SignatureAlgorithm.HS256)
                 .compact();
@@ -44,5 +47,13 @@ public class JwtService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public Claims extractAllClaims(String token) {
+        return Jwts.parserBuilder()
+                .setSigningKey(getSignKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
     }
 }

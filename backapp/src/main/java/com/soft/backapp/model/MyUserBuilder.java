@@ -34,7 +34,7 @@ public class MyUserBuilder {
     }
 
     public MyUser build() {
-        MyUser user = new MyUser(id, username, password, firstName, lastName, email);
+        MyUser user = new MyUser(id, username, password, firstName, lastName, email,0);
         return user;
     }
 }

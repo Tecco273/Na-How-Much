@@ -1,5 +1,7 @@
 package com.soft.backapp.controller;
 
+import java.util.Calendar;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -14,12 +16,20 @@ import com.soft.backapp.dto.AuthRequest;
 import com.soft.backapp.dto.AuthResponse;
 import com.soft.backapp.dto.PasswordChangeRequest;
 import com.soft.backapp.dto.RegistrationRequest;
+import com.soft.backapp.dto.ResetPasswordRequest;
 import com.soft.backapp.model.MyUser;
 import com.soft.backapp.model.MyUserBuilder;
+import com.soft.backapp.model.PasswordReset;
 import com.soft.backapp.security.JwtService;
+import com.soft.backapp.service.MailService;
 import com.soft.backapp.service.MyUserService;
+import com.soft.backapp.service.PasswordResetService;
+import com.soft.backapp.utils.Functions;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @RestController
 @RequestMapping("/api/auth")
@@ -28,6 +38,8 @@ public class AuthController {
     private final AuthenticationManager authenticationManager;
     private final JwtService jwtService;
     private final MyUserService myUserService;
+    private final MailService mailService;
+    private final PasswordResetService passwordResetService;
     private final PasswordEncoder passwordEncoder;
 
     @PostMapping("/login")
@@ -83,11 +95,42 @@ public class AuthController {
         }
     }
 
+    @GetMapping("/forgetPassword")
+    public ResponseEntity<?> forgetPassword(@RequestParam String email) {
+        String code = Functions.GenerateForgetPasswordCode();
+        PasswordReset passwordReset = new PasswordReset(email,passwordEncoder.encode(code),Calendar.getInstance().getTime());
+        mailService.sendForgetPasswordMail(email,myUserService.getUserByEmail(email).get().getFirstName(),code);
+        passwordResetService.savePasswordReset(passwordReset);
+        return ResponseEntity.ok(new AuthResponse("password reset mail sent"));
+    }
+
+    @PostMapping("/resetPassword")
+    public ResponseEntity<?> resetPassword(@RequestBody ResetPasswordRequest request){
+        try {
+            PasswordReset passwordReset = passwordResetService.getByEmail(request.getEmail()).get();
+            if (!passwordEncoder.matches(request.getCode(), passwordReset.getCode())) {
+                throw new RuntimeException("Wrong code");
+            }
+
+            MyUser user = myUserService.getUserByEmail(request.getEmail()).get();
+            user.setPassword(passwordEncoder.encode(request.getNewPassword()));
+            myUserService.save(user);
+            passwordResetService.deletePasswordReset(passwordReset.getId());
+
+            return ResponseEntity.ok(new AuthResponse("Password reset successful"));
+            
+        } catch (Exception e) {
+            return ResponseEntity.status(401).body(new AuthResponse(e.getMessage()));
+            
+        }
+    }
+    
+
     private String loginMethod(String username, String password) throws Exception {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(username, password)
         );
-        return jwtService.generateToken(username);
+        return jwtService.generateToken(myUserService.getUserByUsername(username));
     }
 
     private ResponseEntity<?> loginWithEmail(AuthRequest request) {
