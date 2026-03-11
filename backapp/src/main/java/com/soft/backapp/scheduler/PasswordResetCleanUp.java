@@ -19,7 +19,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PasswordResetCleanUp {
     @Autowired
-    private final PasswordResetService passwordResetService;
+    private PasswordResetService passwordResetService;
     private static final int EXPIRATION_MINUTES = 10;
 
     @Scheduled(fixedRate = 60000)
